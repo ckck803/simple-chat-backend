@@ -1,0 +1,43 @@
+spring:
+  application:
+    name: simple-chat
+  jpa:
+    properties:
+      hibernate:
+        show_sql: true
+#        format_sql: true
+    hibernate:
+      ddl-auto: create
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/chat
+    hikari:
+      username: root
+      password: 1q2w3e4r
+  data:
+    redis:
+      host: localhost
+      port: 6379
+  devtools:
+    restart:
+      enabled: false
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+server:
+  servlet:
+    encoding:
+      charset: UTF-8
+      force-response: true
+
+jwt:
+  secret: 4d2cabffc9fde904ac6505591573a83ef6e44754bc12922c0bcca364d4ca16b2b2936e4b457cb76581eb9a375552f75b4c40e8a4094db99ce52dbe636e9c917f
+  access_token:
+    life_time: '#{1000L * 60 * 60 * 24}'
+  refresh_token:
+    life_time: '#{1000L * 60 * 60 * 24 * 30}'
+
+file:
+  path: /Users/dongwoo-yang
