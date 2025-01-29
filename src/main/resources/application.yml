@@ -41,3 +41,16 @@ jwt:
 
 file:
   path: /Users/dongwoo-yang
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: test
+
+  datasource:
+    driver-class-name: org.h2.Driver
+    username: h2
+    password:
+    url: jdbc:h2:mem:chat

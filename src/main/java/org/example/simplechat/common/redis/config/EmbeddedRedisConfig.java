@@ -13,7 +13,7 @@ import java.io.File;
 import java.io.IOException;
 
 @Configuration
-@Profile({"local", "test"})
+@Profile("local")
 @Slf4j
 public class EmbeddedRedisConfig {
 
