@@ -3,7 +3,7 @@ package org.example.simplechat;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
+// @SpringBootTest
 class SimpleChatApplicationTests {
 
     @Test

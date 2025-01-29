@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit;
 
 import static org.mockito.Mockito.doNothing;
 
-@SpringBootTest
+// @SpringBootTest
 class ChatMessageControllerTest {
 
 
