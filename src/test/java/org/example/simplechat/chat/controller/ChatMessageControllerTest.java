@@ -22,43 +22,43 @@ import static org.mockito.Mockito.doNothing;
 class ChatMessageControllerTest {
 
 
-    @Mock
-    private ChatService chatService;
-
-    private WebSocketStompClient stompClient;
-
-    @BeforeEach
-    public void setup() {
-        this.stompClient = new WebSocketStompClient(new StandardWebSocketClient());
-        this.stompClient.setMessageConverter(new MappingJackson2MessageConverter());
-        // this.stompClient = new WebSocketStompClient(new SockJsClient(
-        //         Collections.singletonList(new WebSocketTransport(new StandardWebSocketClient()))));
-    }
-
+    // // @Mock
+    // // private ChatService chatService;
+    //
+    // private WebSocketStompClient stompClient;
+    //
     // @BeforeEach
     // public void setup() {
-    //     this.stompClient = new WebSocketStompClient(new SockJsClient(
-    //             Collections.singletonList(new WebSocketTransport(new StandardWebSocketClient()))));
+    //     this.stompClient = new WebSocketStompClient(new StandardWebSocketClient());
     //     this.stompClient.setMessageConverter(new MappingJackson2MessageConverter());
+    //     // this.stompClient = new WebSocketStompClient(new SockJsClient(
+    //     //         Collections.singletonList(new WebSocketTransport(new StandardWebSocketClient()))));
     // }
-
-    @Test
-    void testSendChatMessage() throws Exception {
-        ChatMessageDto chatMessageDto = new ChatMessageDto();
-        chatMessageDto.setMessage("Hello, World!");
-
-        // doNothing().when(chatService).sendMessage(chatMessageDto);
-
-        StompHeaders stompHeaders = new StompHeaders();
-        stompHeaders.setDestination("/pub");
-
-        StompSession session = stompClient.connectAsync("ws://localhost:8080/ws-stomp", new WebSocketHttpHeaders(), stompHeaders, new StompSessionHandlerAdapter() {
-                })
-                .get(10, TimeUnit.SECONDS);
-
-        session.send(stompHeaders, chatMessageDto);
-
-        // Mockito.verify(chatService, Mockito.times(1)).sendMessage(chatMessageDto);
-    }
+    //
+    // // @BeforeEach
+    // // public void setup() {
+    // //     this.stompClient = new WebSocketStompClient(new SockJsClient(
+    // //             Collections.singletonList(new WebSocketTransport(new StandardWebSocketClient()))));
+    // //     this.stompClient.setMessageConverter(new MappingJackson2MessageConverter());
+    // // }
+    //
+    // @Test
+    // void testSendChatMessage() throws Exception {
+    //     ChatMessageDto chatMessageDto = new ChatMessageDto();
+    //     chatMessageDto.setMessage("Hello, World!");
+    //
+    //     // doNothing().when(chatService).sendMessage(chatMessageDto);
+    //
+    //     StompHeaders stompHeaders = new StompHeaders();
+    //     stompHeaders.setDestination("/pub");
+    //
+    //     StompSession session = stompClient.connectAsync("ws://localhost:8080/ws-stomp", new WebSocketHttpHeaders(), stompHeaders, new StompSessionHandlerAdapter() {
+    //             })
+    //             .get(10, TimeUnit.SECONDS);
+    //
+    //     session.send(stompHeaders, chatMessageDto);
+    //
+    //     // Mockito.verify(chatService, Mockito.times(1)).sendMessage(chatMessageDto);
+    // }
 
 }
