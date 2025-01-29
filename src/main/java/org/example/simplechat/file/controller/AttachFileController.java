@@ -2,7 +2,7 @@ package org.example.simplechat.file.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.example.simplechat.chat.message.dto.ChatMessageDto;
-import org.example.simplechat.file.constant.AttachFileType;
+import org.example.simplechat.file.dto.FileResourceDto;
 import org.example.simplechat.file.dto.SavedFileDto;
 import org.example.simplechat.file.service.AttachFileService;
 import org.springframework.core.io.Resource;
@@ -25,18 +25,42 @@ public class AttachFileController {
     @GetMapping("/api/file/{filename}")
     public ResponseEntity<Resource> getFileResource(@PathVariable("filename") String filename) {
         try {
-            HttpHeaders httpHeaders = new HttpHeaders();
-            httpHeaders.setContentType(MediaType.IMAGE_PNG);
-            httpHeaders.setContentDisposition(ContentDisposition.inline().filename("image.png").build());
+            // Resource fileResource = attachFileService.getFileResource(filename);
+            FileResourceDto fileResource = attachFileService.getFileResource(filename);
 
-            Resource fileResource = attachFileService.getFileResource(filename);
-            return new ResponseEntity<>(fileResource, httpHeaders, HttpStatus.OK);
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.setContentDisposition(ContentDisposition.inline().filename(filename).build());
+
+            if(fileResource.getContentType() == null) {
+                httpHeaders.setContentType(MediaType.IMAGE_PNG);
+            }else{
+                httpHeaders.setContentType(MediaType.valueOf(fileResource.getContentType()));
+            }
+
+            return new ResponseEntity<>(fileResource.getResource(), httpHeaders, HttpStatus.OK);
         } catch (MalformedURLException exception) {
             return ResponseEntity.badRequest().body(null);
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
+
+    // @GetMapping("/api/file/{filename}")
+    // public ResponseEntity<Resource> getFileResource(@PathVariable("filename") String filename) {
+    //     try {
+    //         HttpHeaders httpHeaders = new HttpHeaders();
+    //         httpHeaders.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+    //         // httpHeaders.setContentDisposition(ContentDisposition.inline().filename(filename).build());
+    //         httpHeaders.setContentDisposition(ContentDisposition.attachment().filename(filename).build());
+    //
+    //         Resource fileResource = attachFileService.getFileResource(filename);
+    //         return new ResponseEntity<>(fileResource, httpHeaders, HttpStatus.OK);
+    //     } catch (MalformedURLException exception) {
+    //         return ResponseEntity.badRequest().body(null);
+    //     } catch (FileNotFoundException e) {
+    //         throw new RuntimeException(e);
+    //     }
+    // }
 
     // @GetMapping("/api/file/{filename}")
     // public ResponseEntity<FileResponse> getFileResource(@PathVariable("filename") String filename) {

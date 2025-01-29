@@ -1,9 +1,6 @@
 package org.example.simplechat.file.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -22,9 +19,15 @@ public class AttachFile extends BaseEntity {
     private String originalFileName;
     private String savedFileName;
     private String fileType;
+    private String contentType;
     private String fileDirectory;
     private String ext;
     private String fileSize;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn
+    private AttachFile thumbnailInfo;
+
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn

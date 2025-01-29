@@ -43,6 +43,9 @@ public class CustomChatMessageRepositoryImpl implements CustomChatMessageReposit
     private final QChatMessage qChatMessage = QChatMessage.chatMessage;
     private final QUserInfo qUserInfo = QUserInfo.userInfo;
     private final QAttachFile qAttachFile = QAttachFile.attachFile;
+    private final QAttachFile qAttachFileThumbnail = new QAttachFile("attachFile2");
+
+    // private final QThumbnailInfo qThumbnailInfo = QThumbnailInfo.thumbnailInfo;
 
     public CustomChatMessageRepositoryImpl(@Autowired EntityManager entityManager) {
         this.jpaQueryFactory = new JPAQueryFactory(JPQLTemplates.DEFAULT, entityManager);
@@ -103,6 +106,7 @@ public class CustomChatMessageRepositoryImpl implements CustomChatMessageReposit
                 .join(qChatMessage.chatRoom, qChatRoom)
                 .join(qChatMessage.userInfo, qUserInfo)
                 .leftJoin(qChatMessage.attachFileList, qAttachFile)
+                .leftJoin(qAttachFile.thumbnailInfo, qAttachFileThumbnail)
                 .where(qChatRoom.roomId.eq(roomId))
                 .orderBy(qChatMessage.sendDate.desc(), qChatMessage.sendTime.desc())
                 .offset(pageable.getOffset())
@@ -117,6 +121,7 @@ public class CustomChatMessageRepositoryImpl implements CustomChatMessageReposit
                                 , qAttachFile.fileType.as("fileType")
                                 , qAttachFile.fileDirectory.as("fileDirectory")
                                 , qAttachFile.fileSize.as("fileSize")
+                                , qAttachFileThumbnail.savedFileName.as("thumbnail")
                         )).as("fileList")
                         , qChatMessage.sendDate.as("sendDate")
                         , qChatMessage.sendTime.as("sendTime")

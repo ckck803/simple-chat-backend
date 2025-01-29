@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 @Getter
 public enum AttachFileType {
 
-    PROFILE("profile"), IMAGE("image"), FILE("file");
+    PROFILE("profile"), IMAGE("image"), FILE("file"), VIDEO("video"), THUMBNAIL("thumbnail");
 
     private final String value;
 }

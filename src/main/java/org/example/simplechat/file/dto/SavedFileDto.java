@@ -9,6 +9,7 @@ public class SavedFileDto {
     String fileDirectory;
     String fileType;
     String fileSize;
+    String thumbnail;
 
     public SavedFileDto(){}
 
@@ -17,5 +18,6 @@ public class SavedFileDto {
         this.fileDirectory = attachFile.getFileDirectory();
         this.fileType = attachFile.getFileType();
         this.fileSize = attachFile.getFileSize();
+        this.thumbnail = attachFile.getThumbnailInfo().getSavedFileName();
     }
 }
