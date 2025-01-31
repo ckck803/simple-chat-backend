@@ -27,8 +27,8 @@ jobs:
 
       - name: Build with Gradle
         run: ./gradlew clean build
-        env:
-            TESTCONTAINERS_HOST_OVERRIDE: host.docker.internal
+#        env:
+#            TESTCONTAINERS_HOST_OVERRIDE: host.docker.internal
 
       - name: Log in to Github Container Registry
         run: docker login ghcr.io -u ${{secrets.DOCKER_REGISTRY_ID}} -p ${{secrets.DOCKER_REGISTRY_TOKEN}}
