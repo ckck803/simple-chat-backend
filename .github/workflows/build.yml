@@ -29,3 +29,37 @@ jobs:
         run: ./gradlew clean build
         env:
             TESTCONTAINERS_HOST_OVERRIDE: host.docker.internal
+
+      - name: Log in to Github Container Registry
+        run: docker login ghcr.io -u ${{secrets.DOCKER_REGISTRY_ID}} -p ${{secrets.DOCKER_REGISTRY_TOKEN}}
+
+      - name: Build and Tag Docker Image
+        run: docker build -t ghcr.io/ckck803/simple-chat-backend:latest .
+
+      - name: Push Docker Image
+        run: docker push ghcr.io/ckck803/simple-chat-backend:latest
+
+#      - name: Get Latest Tag and Increment
+#        id: get_version
+#        run: |
+#          git fetch --tags
+#          LATEST_TAG=$(git tag --sort=-v:refname | head -n 1)
+#          if [[ -z "$LATEST_TAG" ]]; then
+#            NEW_TAG="0.1"
+#          else
+#            NEW_TAG=$(awk -F. '{print $1"."$2+1}' <<< "$LATEST_TAG")
+#          fi
+#          echo "NEW_TAG=$NEW_TAG" >> $GITHUB_ENV
+#
+#      - name: Build and Tag Docker Image
+#        run: docker build -t your-dockerhub-username/simple-chat-backend:${{ env.NEW_TAG }} -t your-dockerhub-username/simple-chat-backend:latest .
+#
+#      - name: Push Docker Image
+#        run: |
+#          docker push your-dockerhub-username/simple-chat-backend:${{ env.NEW_TAG }}
+#          docker push your-dockerhub-username/simple-chat-backend:latest
+#
+#      - name: Create New Git Tag
+#        run: |
+#          git tag ${{ env.NEW_TAG }}
+#          git push origin ${{ env.NEW_TAG }}
